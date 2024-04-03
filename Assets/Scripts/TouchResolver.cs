@@ -5,7 +5,7 @@ using UnityEngine.XR.ARFoundation;
 using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 
 [RequireComponent(typeof(ARRaycastManager), typeof(ARPlaneManager))]
-public class RaycastResolver : MonoBehaviour
+public class TouchResolver : MonoBehaviour
 {
     [SerializeField] private LayerMask _SceneObjectsLayer;
 
@@ -13,6 +13,7 @@ public class RaycastResolver : MonoBehaviour
     private List<ARRaycastHit> _hitList = new();
     private UnityEvent<RaycastHit> _objectDetected = new();
     private UnityEvent<ARRaycastHit> _planeDetected = new();
+    private UnityEvent _touchEnded = new();
 
     public UnityEvent<RaycastHit> GetObjectDetectionEvent()
     {
@@ -22,6 +23,11 @@ public class RaycastResolver : MonoBehaviour
     public UnityEvent<ARRaycastHit> GetPlaneDetectionEvent()
     {
         return _planeDetected;
+    }
+
+    public UnityEvent GetTouchEventEvent()
+    {
+        return _touchEnded;
     }
 
     private void Awake()
@@ -34,6 +40,7 @@ public class RaycastResolver : MonoBehaviour
         EnhancedTouch.TouchSimulation.Enable();
         EnhancedTouch.EnhancedTouchSupport.Enable();
         EnhancedTouch.Touch.onFingerDown += OnFingerDown;
+        EnhancedTouch.Touch.onFingerUp += OnFingerUp;
     }
 
     private void OnDisable()
@@ -41,12 +48,14 @@ public class RaycastResolver : MonoBehaviour
         EnhancedTouch.TouchSimulation.Disable();
         EnhancedTouch.EnhancedTouchSupport.Disable();
         EnhancedTouch.Touch.onFingerDown -= OnFingerDown;
+        EnhancedTouch.Touch.onFingerUp -= OnFingerUp;
     }
 
     private void OnDestroy()
     {
         _objectDetected.RemoveAllListeners();
         _planeDetected.RemoveAllListeners();
+        _touchEnded.RemoveAllListeners();
     }
 
     private void OnFingerDown(EnhancedTouch.Finger finger)
@@ -64,5 +73,10 @@ public class RaycastResolver : MonoBehaviour
         {
             _planeDetected.Invoke(_hitList[0]);
         }
+    }
+
+    private void OnFingerUp(EnhancedTouch.Finger finger)
+    {
+        _touchEnded.Invoke();
     }
 }
