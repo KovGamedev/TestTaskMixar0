@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -10,6 +11,31 @@ public class CubesBehavior : MonoBehaviour
 
     private TouchResolver _raycastResolver;
     private Coroutine _deletingCoroutine;
+    private List<InstallableCube> _cubes = new();
+
+    public void StartMoveCubesRight()
+    {
+        foreach (var cube in _cubes)
+        {
+            cube.StartMoveRight();
+        }
+    }
+
+    public void StartMoveCubesLeft()
+    {
+        foreach (var cube in _cubes)
+        {
+            cube.StartMoveLeft();
+        }
+    }
+
+    public void StopMoveCubes()
+    {
+        foreach (var cube in _cubes)
+        {
+            cube.StopMove();
+        }
+    }
 
     private void Awake()
     {
@@ -25,7 +51,9 @@ public class CubesBehavior : MonoBehaviour
 
     private void InstantiateCube(ARRaycastHit hitInfo)
     {
-        Instantiate(_cubePrefab, hitInfo.pose.position, hitInfo.pose.rotation);
+        _cubes.Add(
+            Instantiate(_cubePrefab, hitInfo.pose.position, Quaternion.identity).GetComponent<InstallableCube>()
+        );
     }
 
     private void OnCubeClick(RaycastHit hitInfo)
@@ -40,6 +68,7 @@ public class CubesBehavior : MonoBehaviour
     private IEnumerator ScheduleCubeDestroying(GameObject cube)
     {
         yield return new WaitForSeconds(_deleteTouchDuration);
+        _cubes.Remove(cube.GetComponent<InstallableCube>());
         Destroy(cube);
     }
 
