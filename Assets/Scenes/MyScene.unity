@@ -258,7 +258,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &824691102
 RectTransform:
   m_ObjectHideFlags: 0
@@ -973,6 +973,7 @@ MonoBehaviour:
   _cubePrefab: {fileID: 6697267460340100417, guid: 2460d87503edad3419259c8aadb55554,
     type: 3}
   _deleteTouchDuration: 0.5
+  _controls: {fileID: 824691101}
 --- !u!1 &1694625871
 GameObject:
   m_ObjectHideFlags: 0

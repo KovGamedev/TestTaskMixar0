@@ -8,6 +8,7 @@ public class CubesBehavior : MonoBehaviour
 {
     [SerializeField] private GameObject _cubePrefab;
     [SerializeField] private float _deleteTouchDuration;
+    [SerializeField] private GameObject _controls;
 
     private TouchResolver _raycastResolver;
     private Coroutine _deletingCoroutine;
@@ -54,6 +55,7 @@ public class CubesBehavior : MonoBehaviour
         _cubes.Add(
             Instantiate(_cubePrefab, hitInfo.pose.position, Quaternion.identity).GetComponent<InstallableCube>()
         );
+        _controls.SetActive(true);
     }
 
     private void OnCubeClick(RaycastHit hitInfo)
@@ -70,6 +72,8 @@ public class CubesBehavior : MonoBehaviour
         yield return new WaitForSeconds(_deleteTouchDuration);
         _cubes.Remove(cube.GetComponent<InstallableCube>());
         Destroy(cube);
+        if(_cubes.Count == 0)
+            _controls.SetActive(false);
     }
 
     private void StopDeletingCoroutine()
