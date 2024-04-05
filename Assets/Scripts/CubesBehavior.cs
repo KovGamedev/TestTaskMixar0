@@ -9,6 +9,7 @@ public class CubesBehavior : MonoBehaviour
     [SerializeField] private GameObject _cubePrefab;
     [SerializeField] private float _deleteTouchDuration;
     [SerializeField] private GameObject _controls;
+    [SerializeField] private ImagesTracker _imagesTracker;
 
     private TouchResolver _raycastResolver;
     private Coroutine _deletingCoroutine;
@@ -55,6 +56,7 @@ public class CubesBehavior : MonoBehaviour
         _cubes.Add(
             Instantiate(_cubePrefab, hitInfo.pose.position, Quaternion.identity).GetComponent<InstallableCube>()
         );
+        _cubes[_cubes.Count - 1].SetImageTracker(_imagesTracker);
         _controls.SetActive(true);
     }
 

@@ -1,16 +1,47 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 [RequireComponent(typeof(ARTrackedImageManager))]
 public class ImagesTracker : MonoBehaviour
 {
-    ARTrackedImageManager _trackedImageManager;
+    private UnityEvent _imageRecognized = new();
+    private ARTrackedImageManager _trackedImageManager;
+
+    public UnityEvent GetImageRecognitionEvent()
+    {
+        return _imageRecognized;
+    }
+
+    public void AddImageToLibrary(Texture2D texture)
+    {
+        if (!(ARSession.state == ARSessionState.SessionInitializing || ARSession.state == ARSessionState.SessionTracking))
+        {
+            Debug.LogError("AR session state is invalid");
+            return;
+        }
+
+        if (_trackedImageManager.referenceLibrary is MutableRuntimeReferenceImageLibrary mutableLibrary)
+        {
+            mutableLibrary.ScheduleAddImageWithValidationJob(texture, "Crystal", 0.3f);
+            _trackedImageManager.enabled = true;
+        }
+    }
+
+    public bool WasImageRecognized()
+    {
+        return _trackedImageManager.enabled;
+    }
 
     private void Awake()
     {
         _trackedImageManager = GetComponent<ARTrackedImageManager>();
+    }
+
+    private void Start()
+    {
+        _trackedImageManager.referenceLibrary = _trackedImageManager.CreateRuntimeLibrary();
     }
 
     private void OnEnable()
@@ -27,17 +58,12 @@ public class ImagesTracker : MonoBehaviour
     {
         foreach (var newImage in eventArgs.added)
         {
-            Debug.Log(newImage.name);
+            _imageRecognized.Invoke();
         }
+    }
 
-        foreach (var updatedImage in eventArgs.updated)
-        {
-            // Handle updated event
-        }
-
-        foreach (var removedImage in eventArgs.removed)
-        {
-            // Handle removed event
-        }
+    private void OnDestroy()
+    {
+        _imageRecognized.RemoveAllListeners();
     }
 }
