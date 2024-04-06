@@ -157,7 +157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.25, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
+  m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: -254, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &211668020
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 12345
+  m_text: 0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -464,6 +464,7 @@ GameObject:
   - component: {fileID: 1103894123}
   - component: {fileID: 1103894122}
   - component: {fileID: 1103894121}
+  - component: {fileID: 1103894125}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -556,6 +557,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1103894125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1103894120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1f2ebb2533e204d83bf513372f6ec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _coinsCounter: {fileID: 211668020}
 --- !u!1 &1141406144
 GameObject:
   m_ObjectHideFlags: 0
@@ -1400,6 +1414,7 @@ MonoBehaviour:
     type: 3}
   _spawnRadius: 2
   _coinsQuantity: 20
+  _coinsCounter: {fileID: 1103894125}
 --- !u!4 &2034715701
 Transform:
   m_ObjectHideFlags: 0
@@ -1449,7 +1464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0.25, y: 1}
-  m_AnchoredPosition: {x: 10, y: -10}
+  m_AnchoredPosition: {x: 10, y: -20}
   m_SizeDelta: {x: -10, y: 50}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2040962129

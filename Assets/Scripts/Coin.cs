@@ -9,6 +9,18 @@ public class Coin : MonoBehaviour
 
     private Transform _model;
     private Vector3 _animationInitialPosition;
+    private CoinsCounter _coinsCounter;
+
+    public void SetCoinsCounter(CoinsCounter coinsCounter)
+    {
+        _coinsCounter = coinsCounter;
+    }
+
+    public void Collect()
+    {
+        _coinsCounter.AddPoint();
+        Destroy(gameObject);
+    }
 
     private void Awake()
     {

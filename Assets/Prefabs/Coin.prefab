@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7507546789837951662}
   - component: {fileID: 5735305240686874637}
+  - component: {fileID: 364906977241486043}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -48,6 +49,27 @@ MonoBehaviour:
   _animationAltitude: 0.1
   _animationDuration: 3
   _animationRotationSpeed: 4
+--- !u!65 &364906977241486043
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6449017374632967566}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.16203517, y: 0.3986473, z: 0.037794136}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &4421607966296014048
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -60,4 +60,10 @@ public class InstallableCube : MonoBehaviour
     {
         _imagesTracker.GetImageRecognitionEvent().RemoveListener(IncreaseMultiplier);
     }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if (collider.TryGetComponent<Coin>(out var coin))
+            coin.Collect();
+    }
 }

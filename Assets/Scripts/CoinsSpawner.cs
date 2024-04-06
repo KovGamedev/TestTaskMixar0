@@ -5,6 +5,7 @@ public class CoinsSpawner : MonoBehaviour
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private float _spawnRadius;
     [SerializeField] private int _coinsQuantity;
+    [SerializeField] private CoinsCounter _coinsCounter;
 
     private void Start()
     {
@@ -17,7 +18,8 @@ public class CoinsSpawner : MonoBehaviour
         {
             var randomInCircle = Random.insideUnitCircle;
             var randomPosition = _spawnRadius * new Vector3(randomInCircle.x, 0, randomInCircle.y);
-            Instantiate(_coinPrefab, randomPosition, Quaternion.identity);
+            var coin = Instantiate(_coinPrefab, randomPosition, Quaternion.identity).GetComponent<Coin>();
+            coin.SetCoinsCounter(_coinsCounter);
         }
     }
 }
