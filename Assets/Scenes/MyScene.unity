@@ -1507,6 +1507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb69ab57863bc9f4faea48bfcaa9d186, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _planeManager: {fileID: 1475488051}
   _coinPrefab: {fileID: 6449017374632967566, guid: 79889d0529bec2441b17217aee484aa9,
     type: 3}
   _spawnRadius: 2
