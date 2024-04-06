@@ -11,6 +11,7 @@ public class CubesBehavior : MonoBehaviour
     [SerializeField] private GameObject _controls;
     [SerializeField] private ImagesTracker _imagesTracker;
 
+    private ARPlaneManager _planeManager;
     private TouchResolver _raycastResolver;
     private Coroutine _deletingCoroutine;
     private List<InstallableCube> _cubes = new();
@@ -42,6 +43,7 @@ public class CubesBehavior : MonoBehaviour
     private void Awake()
     {
         _raycastResolver = GetComponent<TouchResolver>();
+        _planeManager = GetComponent<ARPlaneManager>();
     }
 
     private void Start()
@@ -49,6 +51,7 @@ public class CubesBehavior : MonoBehaviour
         _raycastResolver.GetPlaneDetectionEvent().AddListener(InstantiateCube);
         _raycastResolver.GetObjectDetectionEvent().AddListener(OnCubeClick);
         _raycastResolver.GetTouchEventEvent().AddListener(StopDeletingCoroutine);
+        _planeManager.planesChanged += UpdateCubes;
     }
 
     private void InstantiateCube(ARRaycastHit hitInfo)
@@ -84,10 +87,23 @@ public class CubesBehavior : MonoBehaviour
             StopCoroutine(_deletingCoroutine);
     }
 
+    private void UpdateCubes(ARPlanesChangedEventArgs changes)
+    {
+        if (0 < changes.updated.Count)
+        {
+            var plane = changes.updated[0];
+            foreach (var cube in _cubes)
+            {
+                cube.transform.position = new Vector3(cube.transform.position.x, plane.transform.position.y, cube.transform.position.z);
+            }
+        }
+    }
+
     private void OnDestroy()
     {
         _raycastResolver.GetPlaneDetectionEvent().RemoveListener(InstantiateCube);
         _raycastResolver.GetObjectDetectionEvent().RemoveListener(OnCubeClick);
         _raycastResolver.GetTouchEventEvent().RemoveListener(StopDeletingCoroutine);
+        _planeManager.planesChanged -= UpdateCubes;
     }
 }

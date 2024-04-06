@@ -8,6 +8,7 @@ using EnhancedTouch = UnityEngine.InputSystem.EnhancedTouch;
 public class TouchResolver : MonoBehaviour
 {
     [SerializeField] private LayerMask _SceneObjectsLayer;
+    [SerializeField] private RectTransform _controlsPanel;
 
     private ARRaycastManager _raycastManager;
     private List<ARRaycastHit> _hitList = new();
@@ -64,6 +65,10 @@ public class TouchResolver : MonoBehaviour
             return;
 
         var touchPosition = finger.currentTouch.screenPosition;
+        if (_controlsPanel.gameObject.activeSelf && touchPosition.y <= _controlsPanel.anchorMax.y * Screen.height)
+            return;
+
+
         var physicsRay = Camera.main.ScreenPointToRay(new Vector3(touchPosition.x, touchPosition.y));
         if (_hitList.Count > 0 && Physics.Raycast(physicsRay, out var hitInfo, Camera.main.farClipPlane, _SceneObjectsLayer.value))
         {

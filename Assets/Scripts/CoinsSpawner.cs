@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -43,9 +42,9 @@ public class CoinsSpawner : MonoBehaviour
             var plane = changes.updated[0];
             foreach (var coin in _coins)
             {
-                coin.position = new Vector3(coin.position.x, plane.transform.position.y, coin.position.z);
+                if(coin != null)
+                    coin.position = new Vector3(coin.position.x, plane.transform.position.y, coin.position.z);
             }
-            _planeManager.planesChanged -= SpawnCoins;
         }
     }
 
